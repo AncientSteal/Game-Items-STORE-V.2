@@ -1,0 +1,24 @@
+
+        {% for item in items %}
+            <div class="product-card"
+                onmouseenter="setTarget(event.clientX, event.clientY)"
+                onmousemove="setTarget(event.clientX, event.clientY)"
+                onmouseleave="clearTarget()">
+
+                <a href="{% url 'item_detail' item.category.slug item.slug %}">
+                    <h3>{{ item.name }}</h3>
+                    <p>Цена: {{ item.price }}</p>
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" width="200">
+                    {% endif %}
+                </a>
+                <button type="button"
+                    class="button buy-button ajax-add-btn"
+                    data-url="{% url 'add_to_cart_ajax' item.id %}"
+                    {% if item.stock <= 0 or item.is_limit %}disabled{% endif %}>
+                    {% if item.stock <= 0 %}Нет в наличии{% elif item.is_limit %}Больше нет в наличии{% else %}В корзину{% endif %}
+                </button>
+            </div>
+        {% empty %}
+            <p>В этой категории пока нет товаров.</p>
+        {% endfor %}

@@ -1,0 +1,36 @@
+{% extends "my_app/base.html" %}
+{% load markdown_filters %}
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block content %}
+    <div class="item_card {% if item.category.slug == 'characters' %}type-character{% endif %}">
+        <div class="item-info-layer">
+            <h2>{{ item.name }}</h2>
+            {% if item.detail_image %}
+                <div class="item-image-layer">
+                    <img src="{{ item.detail_image.url }}" alt="{{ item.name }}" class="character_img">
+                </div>
+            {% elif item.image %}
+                <div class="item-image-layer">
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}" class="character_img">
+                </div>
+            {% endif %}
+            <div class="price_info"><p>Цена: {{ item.price }} моры.</p></div>
+            <div class="item_description">
+                <p>Категория: {{ item.category.name }}</p>
+                Описание:
+                    <div class="item_description_info">{{ item.description|markdown }}</div>
+                Подробнее про историю вы можете узнать в нашем
+                <a class="history_link" href="https://genshin.guru/weapon" style="color: var(--accent)">путеводителе.</a>
+            </div>
+            <hr>
+            <div class="button back_to_catalog"><a href="{% url 'item_list' %}">Назад в каталог</a></div>
+            <button type="button"
+                    class="button buy-button-detail ajax-add-btn"
+                    data-url="{% url 'add_to_cart_ajax' item.id %}"
+                    {% if item.stock <= 0 or item.is_limit %}disabled{% endif %}>
+                    {% if item.stock <= 0 %}Нет в наличии{% elif item.is_limit %}Больше нет в наличии{% else %}В корзину{% endif %}
+            </button>
+        </div>
+    </div>
+{% endblock %}

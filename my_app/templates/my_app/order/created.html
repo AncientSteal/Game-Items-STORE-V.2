@@ -1,0 +1,11 @@
+{% extends "my_app/base.html" %}
+
+{% block title %}Заказ оформлен{% endblock %}
+
+{% block content %}
+    <h2>Спасибо за заказ!</h2>
+    <p>Ваш заказ №{{ order.id }} успешно создан.</p>
+    <p>Наш менеджер свяжется с вами в ближайшее время по электронной почте: <strong>{{ order.email }}</strong></p>
+
+    <a href="{% url 'item_list' %}"><button class="button" type="button">Вернуться в каталог</button></a>
+{% endblock %}

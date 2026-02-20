@@ -1,0 +1,30 @@
+{% extends "my_app/base.html" %}
+
+{% block title %}Профиль{{ request.user.username }}{% endblock %}
+
+{% block content %}
+<div class="profile_container">
+    <h2>Личный кабинет: {{ request.user.username }}</h2>
+    <h3>История ваших заказов</h3>
+    {% if orders %}
+        {% for order in orders %}
+            <div class="order-card" style="border: 1px solid var(--accent); padding: 15px; margin-bottom: 20px; border-radius: var(--radius);">
+                <div class="order-header" style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 10px;">
+                    <strong>Заказ № {{ order.id }}</strong>
+                    <span>Дата создания: {{ order.created|date:"d.m.Y H:i" }}</span>
+                </div>
+                <ul style="list-style: none; padding-top: 10px;">
+                    {% for order_item in order.items.all %}
+                        <li>{{ order_item.item.name}} - {{ order_item.quantity }} шт. На сумму: {{ order_item.price }} моры.</li>
+                    {% endfor %}
+                </ul>
+                <div style="text-align: right; margin-top: 10px; color: var(--accent);">
+                    <strong>Итого: {{ order.get_total_cost }} моры</strong>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Вы еще не совершали покупок. <a href="{% url 'item_list' %}">Перейти в каталог</a></p>
+    {% endif %}
+</div>
+{% endblock %}

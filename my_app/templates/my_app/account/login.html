@@ -1,0 +1,13 @@
+{% extends "my_app/base.html" %}
+
+{% block content %}
+<div class="order-container">
+    <h2>Вход в ваш аккаунт</h2>
+    <form method="post" class="order-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button order-button">Войти</button>
+    </form>
+    <p style="margin-top: 15px;">Нет аккаунта? <a href="{% url 'register' %}" style="color: var(--accent);">Зарегистрироваться</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+
+{% extends "my_app/base.html" %}
+
+{% block title %}Каталог товаров{% endblock %}
+
+{% block content %}
+    {% if category %}
+        <h2>{{ category.name }}</h2>
+    {% else %}
+        <h2>Все товары</h2>
+    {% endif %}
+    <div class="product-grid" id="product-grid">
+        {% include "my_app/item/includes/item_list_partial.html" %}
+    </div>
+    <div id="scroll-anchor" style="height: 10px;"></div>
+    <div id="loading-indicator" style="display: none; text-align: center; padding: 20px; color: var(--accent);">
+        ✨ Загрузка новых артефактов...
+    </div>
+{% endblock %}

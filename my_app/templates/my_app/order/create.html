@@ -1,0 +1,24 @@
+{% extends "my_app/base.html" %}
+
+{% block content %}
+<div class="order-container">
+    <h2>Оформление заказа</h2>
+    <div class="order-summary" style="margin-bottom: 30px; padding: 15px; border: 1px dashed var(--accent);">
+        <h3>Ваш заказ:</h3>
+        <ul>
+            {% for item in cart.items.all %}
+                <li>
+                    {{ item.item.name }} — {{ item.quantity }} шт.
+                    (на сумму: {{ item.get_total_price }} руб.)
+                </li>
+            {% endfor %}
+        </ul>
+        <p><strong>Итого к оплате: {{ cart_total_price }} руб.</strong></p>
+    </div>
+    <form action="." method="post" class="order-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button order_button">Подтвердить заказ</button>
+    </form>
+</div>
+{% endblock %}

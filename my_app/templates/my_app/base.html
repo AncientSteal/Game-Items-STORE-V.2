@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Weapon Store 2026{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/main.js' %}"></script>
+</head>
+<body class="page">
+    <div id="menu-overlay" class="overlay"></div>
+    <div id="toast-container"></div>
+    {% if messages %}
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const triggerMessages = () => {
+                    if (typeof window.createToast === 'function') {
+                        {% for message in messages %}
+                            window.createToast("{{ message|escapejs }}", "{{ message.tags }}");
+                        {% endfor %}
+                    } else {
+                        setTimeout(triggerMessages, 50);
+                    }
+                };
+                triggerMessages();
+            });
+        </script>
+    {% endif %}
+    <div class="main-wrapper">
+        <header>
+            <h1><a href="{% url 'item_list' %}">Weapon Store</a></h1>
+            <hr>
+        </header>
+        <button class="burger-menu" id="burger-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <aside id="sidebar">
+            <nav>
+                <h3>Профиль</h3>
+                    <ul class="account-menu">
+                        {% if request.user.is_authenticated %}
+                            <li>
+                                <a href="{% url 'user_profile' %}" class="profile_link">
+                                    👤 {{ request.user.username }}
+                                </a>
+                            </li>
+                            <li>{% if request.user.is_authenticated %}
+                                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <a href="#" onclick="this.closest('form').submit(); return false;" style="opacity: 0.6;">
+                                        Выйти ({{ request.user.username }})
+                                    </a>
+                                </form>
+                                {% else %}
+                                    <a href="{% url 'login' %}" style="opacity: 0.6;">Войти</a>
+                                {% endif %}
+                            </li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}">Войти</a></li>
+                            <li><a href="{% url 'register' %}">Регистрация</a></li>
+                        {% endif %}
+                    </ul>
+                <div class="search-box">
+                    <hr>
+                    <input type="text" id="live-search" class="live-search" placeholder="Поиск артефактов..." autocomplete="off">
+                    <hr>
+                </div>
+                <h3>Категории</h3>
+                <ul class="category-container">
+                    <li>
+                        <a href="{% url 'item_list' %}">Все товары</a>
+                    </li>
+                    {% for category in categories %}
+                        <li>
+                            <a href="{% url 'item_list_by_category' category.slug %}">{{ category.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'cart_detail' %}" class="cart-link">🛒 Корзина (<span id="cart-count">{{ total_quantity }}</span>)</a>
+            </nav>
+            <div class="info-section">
+                <div>г. Мондшат, ул. Ветрянная, д.7</div>
+                <div class="info-contacts">
+                    <p>+7 (171) 717 17 71 / bezlepkin_artur@mail.ru</p>
+                </div>
+                <div class="info-links">
+                    <a href="#" target="_blank"><img src="{% static 'images/icons/free-icon-vk.png' %}" alt="VK"></a>
+                    <a href="#" target="_blank"><img src="{% static 'images/icons/free-icon-telegram.png' %}" alt="Telegram"></a>
+                    <a href="#" target="_blank"><img src="{% static 'images/icons/free-icon-twitch.png' %}" alt="VK"></a>
+                </div>
+                <a class="idea-source" href="https://www.flaticon.com/ru/free-icons/social-networks">Обложки социальных сетей были разработаны с использованием ресурсов сайта Flaticon.com.</a>
+            </div>
+        </aside>
+
+        <main>
+            {% block content %}
+            <!-- Содержимое других шаблонов -->
+            {% endblock %}
+        </main>
+    </div>
+    <footer>
+        <hr>
+        <div class="footer-blocks">
+            <div>
+                <p>г. Мондшат, ул. Ветрянная, д.7</p>
+                <p class="info-contacts">+7 (171) 717 17 71 / bezlepkin_artur@mail.ru</p>
+                <div class="info-links">
+                    <a href="#" target="_blank"><img src="{% static 'images/icons/free-icon-vk.png' %}" alt="VK"></a>
+                    <a href="#" target="_blank"><img src="{% static 'images/icons/free-icon-telegram.png' %}" alt="Telegram"></a>
+                    <a href="#" target="_blank"><img src="{% static 'images/icons/free-icon-twitch.png' %}" alt="VK"></a>
+                </div>
+            </div>
+            <div class="source-container">
+                <a class="idea-source" href="https://www.flaticon.com/ru/free-icons/social-networks">Обложки социальных сетей были разработаны с использованием ресурсов сайта Flaticon.com.</a>
+                <p style="margin-bottom: 4px;"></p>
+                <a class="idea-source" href="https://genshin.hoyoverse.com/ru">Идейная концепция магазина, изображения товаров и их описания были взяты из игры «Genshin Impact»</a>
+                <p style="margin-bottom: 4px;"></p>
+                <p>Copyright © Weapon-Store, 2025—2026. Не является аффилированным и не связан с компанией miHoYo. Автор сайта - Безлепкин Артур Александрович.</p>
+            </div>
+        </div>
+    </footer>
+    <div id="snake-container" class="snake-layer"></div>
+    <script src="{% static 'js/snake.js' %}"></script>
+    <script src="{% static 'js/animations.js' %}"></script>
+</body>
+</html>
