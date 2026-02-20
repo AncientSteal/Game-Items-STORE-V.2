@@ -2,15 +2,14 @@ meta:
   environment: python
   toolchain:
     name: pip
-    version: 3.12
-
+    version: "3.12"
 build:
   requirementsPath: requirements.txt
-  commands:
-    - python manage.py collectstatic --noinput
-    - python manage.py migrate
 run:
   persistenceFolder: /data
   containerPort: 80
   scriptName: manage.py
-  args: runserver 0.0.0.0:80
+  args: >
+    sh -c "python manage.py collectstatic --noinput && 
+    python manage.py migrate && 
+    python manage.py runserver 0.0.0.0:80"
