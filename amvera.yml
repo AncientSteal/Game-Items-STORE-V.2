@@ -8,4 +8,5 @@ build:
 run:
   persistenceFolder: /data
   containerPort: 80
-  scriptName: entrypoint.sh
+  scriptName: manage.py
+  args: runserver 0.0.0.0:80
