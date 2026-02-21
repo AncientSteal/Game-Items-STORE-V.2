@@ -1,3 +1,4 @@
+version: null
 meta:
   environment: python
   toolchain:
@@ -6,7 +7,9 @@ meta:
 build:
   requirementsPath: requirements.txt
 run:
+  persistenceMount: /data
   persistenceFolder: /data
   containerPort: 80
   scriptName: manage.py
   args: runserver 0.0.0.0:80
+serviceType: compute
