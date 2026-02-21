@@ -8,8 +8,4 @@ build:
 run:
   persistenceFolder: /data
   containerPort: 80
-  scriptName: manage.py
-  args: >
-    sh -c "python manage.py collectstatic --noinput && 
-    python manage.py migrate && 
-    python manage.py runserver 0.0.0.0:80"
+  scriptName: entrypoint.sh
