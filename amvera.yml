@@ -7,5 +7,4 @@ build:
   requirementsPath: requirements.txt
 run:
   containerPort: 80
-  #command: python manage.py runserver 0.0.0.0:80
-  scriptName: manage.py
+  command: python manage.py collectstatic --noinput && python manage.py migrate && python manage.py runserver 0.0.0.0:80
