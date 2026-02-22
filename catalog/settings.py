@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 #os.getenv('DEBUG') == 'True'
-ALLOWED_HOSTS = ['*', 'gameitemsstore2-ancientsteal.amvera.io']
+ALLOWED_HOSTS = ['*', 'gameitemsstore2-ancientsteal.amvera.io', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -138,3 +138,7 @@ LOGIN_URL = 'login'
 #LOGOUT_REDIRECT_URL = 'user_profile'
 LOGOUT_REDIRECT_URL = 'item_list'
 LOGIN_REDIRECT_URL = 'item_list'
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://gameitemsstore2-ancientsteal.amvera.io',
+]
