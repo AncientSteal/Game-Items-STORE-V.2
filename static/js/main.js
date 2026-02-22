@@ -46,8 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
             .then(response => response.json())
-            console.log(data)
             .then(data => {
+                console.log(data);
                 createToast(data.message, data.status);
                 const itemId = addBtn.getAttribute('data-item-id');
                 const qtyEl = document.getElementById(`item-qty-${itemId}`);
