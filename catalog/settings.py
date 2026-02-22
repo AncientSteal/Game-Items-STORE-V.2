@@ -142,3 +142,7 @@ LOGIN_REDIRECT_URL = 'item_list'
 CSRF_TRUSTED_ORIGINS = [
     'https://gameitemsstore2-ancientsteal.amvera.io',
 ]
+
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
