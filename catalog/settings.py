@@ -26,7 +26,7 @@ load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 #os.getenv('DEBUG') == 'True'
 ALLOWED_HOSTS = ['*', 'gameitemsstore2-ancientsteal.amvera.io', 'localhost', '127.0.0.1']
 

@@ -28,5 +28,7 @@ urlpatterns = [
     path('', include('my_app.urls')),
 ]
 
-if settings.DEBUG: # пока в разработке мы без сервера грузим картинки через django
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
+]
