@@ -12,7 +12,9 @@ from django.template.loader import render_to_string
 from .forms import OrderCreateForm
 from .models import Item, Category, Cart, CartItem, OrderItem, Order
 
+from django.views.decorators.csrf import ensure_csrf_cookie
 
+@ensure_csrf_cookie
 def item_list(request, category_slug=None):
     items = Item.objects.filter(available=True)
     category = None
